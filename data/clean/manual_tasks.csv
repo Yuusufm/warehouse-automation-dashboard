@@ -1,0 +1,4 @@
+TaskID,Task,Area,AutomationIdea,AutomationType,OneTimeCost,TimeSavedPct,HoursPerDay
+T01,Shipping labels,Shipping,Auto-print labels when an order is packed,Software,9500,0.6,3.82
+T02,Carrier booking,Shipping,Send shipments to carriers automatically with Power Automate,Software,7500,0.85,3.06
+T03,Stock counts,Inventory,Handheld scanners that update the WMS,Hardware,6000,0.5,2.73
