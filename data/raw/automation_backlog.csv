@@ -1,0 +1,4 @@
+Task ID,Task,Area,Automation Idea,Type,One-Time Cost,Est. Time Saved
+T01,Shipping labels,Shipping,Auto-print labels when an order is packed,Software,"$9,500",60%
+T02,Carrier booking,Shipping,Send shipments to carriers automatically with Power Automate,Software,"$7,500",85%
+T03,Stock counts,Inventory,Handheld scanners that update the WMS,Hardware,"$6,000",50%
