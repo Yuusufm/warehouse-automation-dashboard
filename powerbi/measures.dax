@@ -30,3 +30,22 @@ Late Delivery % = DIVIDE ( [Late Deliveries], [Total Receipts] )
 
 // Average hours from truck unloaded to stock on the shelf
 Dock to Stock (Hours) = AVERAGE ( receipts[DockToStockHours] )
+
+
+// ==================== AUTOMATION ====================
+
+// Average warehouse wage (assumption), used to turn hours into $
+Hourly Wage = 23
+
+// For each task: hours per day x 250 workdays x % it should save, then to $
+// (HoursPerDay is worked out in clean_data.py from the team leads' task sheet)
+Savings per Year =
+SUMX (
+    manual_tasks,
+    manual_tasks[HoursPerDay] * 250 * manual_tasks[TimeSavedPct]
+) * [Hourly Wage]
+
+Automation Cost = SUM ( manual_tasks[OneTimeCost] )
+
+// Months until the savings cover the cost
+Payback (Months) = DIVIDE ( [Automation Cost], [Savings per Year] / 12 )
