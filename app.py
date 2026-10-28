@@ -150,7 +150,7 @@ with tab3:
 
     st.dataframe(
         roi[["Task", "AutomationIdea", "HoursPerDay", "TimeSavedPct", "Savings / Year", "OneTimeCost",
-             "Payback (Months)"]],
+             "Payback (Months)"]].astype({"Savings / Year": int}),
         hide_index=True,
         width="stretch",
         column_config={
