@@ -123,5 +123,7 @@ with tab2:
         late = rc.groupby("Vendor")["ArrivalStatus"].apply(lambda s: (s == "Late").mean())
         late = late.reset_index(name="Late %")
         fig = px.bar(late, x="Late %", y="Vendor", orientation="h", color_discrete_sequence=[ORANGE])
+        # Most-late vendor on top
+        fig.update_yaxes(categoryorder="total ascending")
         fig.update_xaxes(tickformat=".0%", hoverformat=".1%")
         show("Late deliveries by vendor", fig)
