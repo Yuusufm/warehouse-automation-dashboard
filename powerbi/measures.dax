@@ -1,0 +1,32 @@
+// All the DAX measures used in the dashboard.
+// Paste each one into Power BI: Home > New measure.
+// Table names match the CSV file names in data/clean.
+
+
+// ==================== SHIPPING ====================
+
+// Every row in orders is one order
+Total Orders = COUNTROWS ( orders )
+
+// OnTime is 1 or 0, so the average is the share shipped on time
+On-Time Ship % = AVERAGE ( orders[OnTime] )
+
+// Same trick: HasError is 1 or 0
+Error Rate % = AVERAGE ( orders[HasError] )
+
+// Share of orders shipped with no mistakes
+Order Accuracy % = 1 - [Error Rate %]
+
+
+// ==================== RECEIVING ====================
+
+// Every row in receipts is one delivery from a vendor
+Total Receipts = COUNTROWS ( receipts )
+
+// Same count, but only the late ones
+Late Deliveries = CALCULATE ( [Total Receipts], receipts[ArrivalStatus] = "Late" )
+
+Late Delivery % = DIVIDE ( [Late Deliveries], [Total Receipts] )
+
+// Average hours from truck unloaded to stock on the shelf
+Dock to Stock (Hours) = AVERAGE ( receipts[DockToStockHours] )
