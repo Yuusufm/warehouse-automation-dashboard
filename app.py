@@ -127,3 +127,19 @@ with tab2:
         fig.update_yaxes(categoryorder="total ascending")
         fig.update_xaxes(tickformat=".0%", hoverformat=".1%")
         show("Late deliveries by vendor", fig)
+
+# ---------- Automation ----------
+with tab3:
+    st.caption("The month filter doesn't apply here.")
+
+    # Savings + payback for each automation idea
+    roi = tasks.copy()
+    roi["Savings / Year"] = roi["HoursPerDay"] * WORKDAYS_PER_YEAR * roi["TimeSavedPct"] * HOURLY_WAGE
+    roi["Payback (Months)"] = roi["OneTimeCost"] / (roi["Savings / Year"] / 12)
+    roi = roi.sort_values("Payback (Months)")
+
+    st.subheader("Where does the time go?")
+    fig = px.bar(roi, x="HoursPerDay", y="Task", orientation="h", color_discrete_sequence=[BLUE])
+    fig.update_yaxes(categoryorder="total ascending")
+    fig.update_xaxes(hoverformat=".1f")
+    show("Hours per day spent on each manual task", fig, 220)
