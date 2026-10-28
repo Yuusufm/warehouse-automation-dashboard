@@ -101,3 +101,27 @@ with tab1:
                  category_orders={"ShipStatus": list(STATUS_COLORS)})
     fig.update_yaxes(tickformat=".0%", hoverformat=".1%")
     show("Shipped early / on time / late", fig)
+
+# ---------- Receiving ----------
+with tab2:
+    k = st.columns(3)
+    k[0].metric("Deliveries", f"{len(rc):,}")
+    k[1].metric("Late Deliveries", f"{(rc['ArrivalStatus'] == 'Late').mean():.1%}",
+                help="Showed up after the day the vendor promised")
+    k[2].metric("Avg Dock-to-Stock", f"{rc['DockToStockHours'].mean():.1f} hrs",
+                help="Hours from truck unloaded to stock on the shelf")
+
+    left, right = st.columns(2)
+    with left:
+        d2s = rc.assign(Month=rc["ReceivedDate"].dt.to_period("M").dt.to_timestamp())
+        d2s = d2s.groupby("Month")["DockToStockHours"].mean().reset_index()
+        fig = px.line(d2s, x="Month", y="DockToStockHours", markers=True, color_discrete_sequence=[BLUE])
+        fig.update_yaxes(hoverformat=".1f", rangemode="tozero")
+        mark_go_live(fig, AI_CAPTURE_LIVE, "AI reads packing slips")
+        show("Dock-to-stock hours by month", fig)
+    with right:
+        late = rc.groupby("Vendor")["ArrivalStatus"].apply(lambda s: (s == "Late").mean())
+        late = late.reset_index(name="Late %")
+        fig = px.bar(late, x="Late %", y="Vendor", orientation="h", color_discrete_sequence=[ORANGE])
+        fig.update_xaxes(tickformat=".0%", hoverformat=".1%")
+        show("Late deliveries by vendor", fig)
