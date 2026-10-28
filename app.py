@@ -143,3 +143,22 @@ with tab3:
     fig.update_yaxes(categoryorder="total ascending")
     fig.update_xaxes(hoverformat=".1f")
     show("Hours per day spent on each manual task", fig, 220)
+
+    st.subheader("What should we automate next?")
+    st.caption(f"Savings / year = hours per day × {WORKDAYS_PER_YEAR} workdays × expected saving × "
+               f"${HOURLY_WAGE}/hr. Payback = cost ÷ monthly savings. Shortest payback first.")
+
+    st.dataframe(
+        roi[["Task", "AutomationIdea", "HoursPerDay", "TimeSavedPct", "Savings / Year", "OneTimeCost",
+             "Payback (Months)"]],
+        hide_index=True,
+        width="stretch",
+        column_config={
+            "AutomationIdea": "Automation Idea",
+            "HoursPerDay": st.column_config.NumberColumn("Hours / Day", format="%.1f"),
+            "TimeSavedPct": st.column_config.NumberColumn("Expected Saving", format="percent"),
+            "Savings / Year": st.column_config.NumberColumn(format="dollar"),
+            "OneTimeCost": st.column_config.NumberColumn("Cost", format="dollar"),
+            "Payback (Months)": st.column_config.NumberColumn(format="%.1f"),
+        },
+    )
