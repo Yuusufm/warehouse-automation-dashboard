@@ -4,7 +4,7 @@ A Power BI + Python dashboard for a warehouse ops team. Three pages: how shippin
 
 It's built for team leads who track KPIs in Excel and still lose hours a day to manual work like hand-writing shipping labels.
 
-**Live demo:** _coming soon_
+**Live demo:** [open the dashboard](https://warehouse-automation-dashboard-z3b79iqchtwj2dkdgovtfp.streamlit.app/)
 
 ## How to use it
 
